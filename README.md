@@ -4,9 +4,9 @@
 ## Run TPC-DS
 
 ### Install required packages
-make sure you have following packages install in your syste: gcc, make, flex, bison, byacc, git
+make sure you have following packages install in your syste: gcc, make, flex, bison, byacc, git, time
 ```
-sudo apt-get install gcc make flex bison byacc git
+sudo apt-get install gcc make flex bison byacc git time
 ```
 
 ### Install Clickhouse client
@@ -34,5 +34,11 @@ chmod a+x *.sh
 parameters used in this step: PARALLEL
 ```
 ./gen_data.sh 100
+```
+
+### Populate data to ByConity
+parameters used in this step: all parameters
+```
+./populate_data.sh 100
 ```
 

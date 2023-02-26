@@ -5,7 +5,7 @@ source ./helper.sh
 [ -z "$1" ] && DATASIZE=1 || DATASIZE=$1
 [ -z "$2" ] && CSVPATH="$SCRIPTPATH/data_${SUITE}_${DATASIZE}" || CSVPATH=$2
 
-DATABASE=${DATABASE:-${DB_PREFIX}${SUITE}${DATASIZE}}
+DATABASE=${DATABASE:-${DB_PREFIX}${SUITE}${DATASIZE}${DB_SUFFIX}}
 EXT=dat
 DELIM="|"
 
@@ -51,6 +51,9 @@ CMDS=()
 for i in ${!FILE_NAMES[@]}; do
 	SQL="INSERT INTO ${FILE_TABLES[$i]} FORMAT CSV"
 	CMD=$(clickhouse_client_cmd "$SQL" "$ARGS < ${FILE_NAMES[$i]}")
+	if [ -n "$ENABLE_TRACE" ]; then
+        trace "$CMD"
+    fi
     CMDS+=("${CMD} && echo uploaded ${FILE_NAMES[$i]} || exit 1")
 done
 
@@ -70,7 +73,7 @@ log "Used ${SECONDS}s to import ${DATABASE}."
 
 # check row counts 
 select_count() {
-	clickhouse_client "SELECT COUNT(*) FROM $1" 2>$ERROR_LOG
+	clickhouse_client "SELECT COUNT(*) FROM $1"
 }
 
 case $DATASIZE in
@@ -103,9 +106,4 @@ if [[ "${FAILURE}" == "1" ]]; then
 	exit 1
 fi 
 log "All tables imported matches expectation."
-
-
-log "create stats..."
-clickhouse_client -q "create stats if not exists all"
-
 
