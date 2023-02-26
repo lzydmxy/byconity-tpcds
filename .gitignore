@@ -14,5 +14,7 @@ lib/
 build/
 data_*/
 lib-post1p0/
-bin/clickhouse
-bin/clickhouse-ch
+bin/
+result/
+config.sh
+test.sh
