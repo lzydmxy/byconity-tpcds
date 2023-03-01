@@ -5,7 +5,7 @@ source ./helper.sh
 [ -z "$1" ] && DATASIZE=1 || DATASIZE=$1
 [ -z "$2" ] && CSVPATH="$SCRIPTPATH/data_${SUITE}_${DATASIZE}" || CSVPATH=$2
 
-DATABASE=${DATABASE:-${DB_PREFIX}${SUITE}${DATASIZE}${DB_SUFFIX}}
+DATABASE=${DATABASE:-${DB_PREFIX}${SUITE}${DATASIZE}}
 EXT=dat
 DELIM="|"
 
@@ -17,13 +17,7 @@ fi
 set -e
 
 log "Create tables for ${DATABASE}..."
-if [ -n "$BUCKET_SIZE" ]; then
-	log "Use bucket table. "
-	CNCH_DDL=$SCRIPTPATH/ddl/byconity-bucket.sql
-else
-	CNCH_DDL=$SCRIPTPATH/ddl/byconity.sql
-fi
-CNCH_DDL=$(sed "s|${SUITE}|${DATABASE}|g; s|__BUCKET_SIZE__|${BUCKET_SIZE}|g" ${CNCH_DDL})
+CNCH_DDL=$(sed "s|${SUITE}|${DATABASE}|g" $SCRIPTPATH/ddl/tpcds.sql)
 clickhouse_client "${CNCH_DDL}"
 
 log "Import dataset from ${CSVPATH}..."

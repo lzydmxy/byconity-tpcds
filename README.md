@@ -30,7 +30,7 @@ chmod a+x *.sh
 ./build.sh
 ```
 
-### Generate 100GB data
+### Generate data
 parameters used in this step: PARALLEL
 ```
 ./gen_data.sh 100
@@ -42,3 +42,8 @@ parameters used in this step: all parameters
 ./populate_data.sh 100
 ```
 
+### Run the benchmark
+parameters used in this step: all parameters
+```
+./benchmark.sh 100
+```

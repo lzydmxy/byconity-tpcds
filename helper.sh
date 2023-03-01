@@ -7,12 +7,6 @@ SUITE=${SUITE:-tpcds}
 CLUSTER_NAME=${CLUSTER_NAME:-cluster}
 CLIENT_TYPE="ByConity"
 ENABLE_TRACE="true"
-CSVPARTS1=${LOGDIR}/parts_start.csv
-CSVPARTS2=${LOGDIR}/parts_end.csv
-
-if [ -n "$BUCKET_SIZE" ]; then
-	DB_SUFFIX=${DB_SUFFIX}_bucket${BUCKET_SIZE}
-fi
 
 if [ -n "$SRV_USER" ]; then
     if [ -n "$SRV_PASSWORD" ]; then
@@ -22,13 +16,8 @@ if [ -n "$SRV_USER" ]; then
     fi
 fi
 
-if [ "$ENABLE_OPTIMIZER" == "true" ] || [ "$ENABLE_OPTIMIZER" == "1" ]; then
-    OPTIMIZER_OPTS=" --enable_optimizer=1 --dialect_type='ANSI'"
-    OPTIMIZER_SETS="set enable_optimizer=1; set dialect_type='ANSI'; "
-    QPATH_SUFFIX=ansi
-else
-    QPATH_SUFFIX=default
-fi
+OPTIMIZER_OPTS=" --enable_optimizer=1 --dialect_type='ANSI'"
+OPTIMIZER_SETS="set enable_optimizer=1; set dialect_type='ANSI'; "
 
 if [ ! -d $LOGDIR ]; then
     mkdir -p $LOGDIR
@@ -76,25 +65,4 @@ function sec_to_ms() {
 
 function parse_time() {
 	sec_to_ms $(cat time.txt | grep real | awk '{print $2}'; rm time.txt > /dev/null)
-}
-
-function report_parts_merge () {
-	TABLES=$(show_tables "$1")
-
-	PARTS=""
-	echo -e "┌────────────────────┐\n|  CNCH TABLE PARTS  |\n└────────────────────┘\n"
-	for TABLE in ${TABLES}; do
-        PARTS_TABLE=cnch_parts
-        SQL="SELECT COUNT(*) FROM system.${PARTS_TABLE} WHERE database = '${1}' AND table = '${TABLE}' AND visible"
-
-		RES=$(clickhouse_client "${SQL}")
-		if [[ "${2}" == "start" ]]; then
-			echo "${TABLE},${RES}" >> ${CSVPARTS1}
-		elif [[ "${2}" == "end" ]]; then 
-			echo "${TABLE},${RES}" >> ${CSVPARTS2}
-		fi
-		
-		PARTS+="${TABLE}: ${RES}\n"
-	done
-	echo -e "${PARTS}"
 }
