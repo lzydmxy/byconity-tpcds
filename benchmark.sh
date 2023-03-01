@@ -9,6 +9,7 @@ TIMEOUT=${TIMEOUT:-600}
 RESULT=${RESULT:-${LOGDIR}/result.csv}
 SQL_DIR=${SCRIPTPATH}/sql
 LOG_CUR=$LOGDIR/curr.txt
+TIME_FILE=$LOGDIR/time.txt
 
 echo "qid,duration,status" > "$RESULT"
 
@@ -24,6 +25,10 @@ if [ -f ${SQL_DIR}/warmup.sql ]; then
 	clickhouse_client "$QUERY" -d "$DATABASE" > /dev/null
 fi
 
+function parse_time() {
+	sec_to_ms $(cat ${TIME_FILE} | grep real | awk '{print $2}'; rm ${TIME_FILE} > /dev/null)
+}
+
 function benchmark_query() {
     for i in {1..18}; do
         SQL=$(sed -e "/^--/d; s/${SUITE}\./${DATABASE}\./g" ${1})
@@ -32,7 +37,7 @@ function benchmark_query() {
             DURATION=$(sec_to_ms ${DURATION})
         else
             CMD=$(clickhouse_client_cmd "$SQL" "-d $DATABASE -t --format=Null")
-            /usr/bin/time -p -o time.txt timeout $TIMEOUT sh -c "$CMD" >${LOG_CUR} 2>&1 && RET=0 || RET=$?
+            /usr/bin/time -p -o "${TIME_FILE}" timeout $TIMEOUT sh -c "$CMD" >${LOG_CUR} 2>&1 && RET=0 || RET=$?
         fi 
 
         # connection refused, try again
@@ -46,7 +51,7 @@ function benchmark_query() {
         exit 1
     fi
 
-	[[ -f time.txt ]] && DURATION=$(parse_time)
+	[[ -f "${TIME_FILE}" ]] && DURATION=$(parse_time)
 
 	# workaround for case that engine error happens but returns 0
 	if [ $RET -eq 0 ]; then

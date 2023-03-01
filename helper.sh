@@ -62,7 +62,3 @@ function sec_to_ms() {
 	local DURATION=$(bc <<< $1*1000)
 	echo ${DURATION%.*}
 }
-
-function parse_time() {
-	sec_to_ms $(cat time.txt | grep real | awk '{print $2}'; rm time.txt > /dev/null)
-}
