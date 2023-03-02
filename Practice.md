@@ -6,7 +6,11 @@
 3. You have 2 options to deploy a ByConity Cluster, Using Docker or using package installation.
 
 ### Docker deployment
-
+1. Pull docker images
+```
+docker pull byconity/byconity-server:v0.2
+```
+2. 
 
 ### Package deployment
 

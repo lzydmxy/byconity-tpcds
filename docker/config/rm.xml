@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+  NOTE: User and query level settings are set up in "users.xml" file.
+  If you have accidentally specified user-level settings here, server won't start.
+  You can either move the settings to the right place inside "users.xml" file
+   or add <skip_check_for_incorrect_settings>1</skip_check_for_incorrect_settings> here.
+-->
+
+<yandex>
+    <logger>
+        <level>trace</level>
+        <log>/root/app/logs/byconity-rm/rm.log</log>
+        <errorlog>/root/app/logs/byconity-rm/rm.log</errorlog>
+        <size>1000M</size>
+        <count>10</count>
+    </logger>
+
+    <listen_host>0.0.0.0</listen_host>
+    <path>/root/app/logs/byconity-rm/</path>
+        <catalog>
+        <name_space>byconity_tpcds_test</name_space>
+    </catalog>
+
+    <catalog_service>
+        <type>fdb</type>
+        <fdb>
+            <cluster_file>/root/app/config/fdb.cluster</cluster_file>
+        </fdb>
+    </catalog_service>
+
+    <rpc_port>18686</rpc_port>
+
+    <resource_manager>
+        <port>18989</port>
+        <vws>
+            <vw>
+                <name>vw_default</name>
+                <type>Default</type>
+                <num_workers>0</num_workers>
+                <worker_groups>
+                    <worker_group>
+                        <name>wg_default</name>
+                        <type>Physical</type>
+                    </worker_group>
+                </worker_groups>
+            </vw>
+            <vw>
+                <name>vw_write</name>
+                <type>Write</type>
+                <num_workers>0</num_workers>
+                <worker_groups>
+                    <worker_group>
+                        <name>wg_write</name>
+                        <type>Physical</type>
+                    </worker_group>
+                </worker_groups>
+            </vw>
+        </vws>
+    </resource_manager>
+    <cnch_config>/root/app/config/cnch_config.xml</cnch_config>
+</yandex

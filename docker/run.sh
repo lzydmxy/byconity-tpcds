@@ -61,6 +61,16 @@ function run_dm() {
     --name byconity-dm byconity/byconity-server:v0.2 daemon-manager --config-file /root/app/config/dm.xml 
 }
 
+function run_rm() {
+    docker run -d --restart=on-failure \
+    --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
+    --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
+    --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
+    --expose 18989 \
+    --network host \
+    --name byconity-rm byconity/byconity-server:v0.2 resource-manager --config-file /root/app/config/rm.xml 
+}
+
 function run_cli() {
     docker run -it\
     --network host \
@@ -84,6 +94,8 @@ function stop_byconity() {
         docker stop -t 30 byconity-write-worker
     elif [ "$1" = "dm" ]; then
         docker stop -t 30 byconity-dm
+    elif [ "$1" = "rm" ]; then
+        docker stop -t 30 byconity-rm
     else
         echo "valid argument stop tso, stop server, stop read_worker, stop write_worker, stop dm"
     fi
@@ -100,6 +112,8 @@ function start_byconity() {
         docker start byconity-write-worker
     elif [ "$1" = "dm" ]; then
         docker start byconity-dm
+    elif [ "$1" = "rm" ]; then
+        docker start byconity-rm
     elif [ "$1" = "cli" ]; then
         docker start -i byconity-cli
     else
@@ -131,6 +145,8 @@ elif [ "$1" = "write_worker" ]; then
     run_write_worker
 elif [ "$1" = "dm" ]; then
     run_dm
+elif [ "$1" = "rm" ]; then
+    run_rm
 elif [ "$1" = "cli" ]; then
     run_cli
 elif [ "$1" = "cli2" ]; then
