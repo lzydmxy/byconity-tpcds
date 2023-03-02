@@ -2,6 +2,8 @@
 
 function run_tso() {
     docker run -d --restart=on-failure \
+    --cpu=2 \
+    --memory=500m \
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --expose 18689 \
@@ -11,6 +13,8 @@ function run_tso() {
 
 function run_server() {
     docker run -d --restart=on-failure \
+    --cpu=16 \
+    --memory=60g \
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
@@ -25,6 +29,8 @@ function run_server() {
 
 function run_read_worker() {
     docker run -d --restart=on-failure \
+    --cpu=16 \
+    --memory=60g \
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
@@ -41,22 +47,26 @@ function run_read_worker() {
 
 function run_write_worker() {
     docker run -d --restart=on-failure \
+    --cpu=16 \
+    --memory=60g \
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
     -e VIRTUAL_WAREHOUSE_ID=vw_write \
     -e WORKER_GROUP_ID=wg_write \
-    --expose 18696 \
-    --expose 18697 \
-    --expose 18698 \
-    --expose 18699 \
-    --expose 18700 \
+    --expose 28696 \
+    --expose 28697 \
+    --expose 28698 \
+    --expose 28699 \
+    --expose 28700 \
     --network host \
     --name byconity-write-worker byconity/byconity-server:v0.2 server -C --config-file /root/app/config/worker-write.xml 
 }
 
 function run_dm() {
     docker run -d --restart=on-failure \
+    --cpu=4 \
+    --memory=10g \
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
@@ -67,6 +77,8 @@ function run_dm() {
 
 function run_rm() {
     docker run -d --restart=on-failure \
+    --cpu=8 \
+    --memory=16g \
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \

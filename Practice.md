@@ -5,16 +5,22 @@
 2. Setup HDFS to 4+ physical machines, with 1 name node and 3+ data nodes. You can follow [this guide](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/HDFS_installation.md)
 3. You have 2 options to deploy a ByConity Cluster, Using Docker or using package installation.
 
-### Docker deployment
+### 3.1 Docker deployment
 1. Pull docker images
 ```
 docker pull byconity/byconity-server:v0.2
 ```
 2. 
 
-### Package deployment
+### 3.2 Package deployment
 
 
+4. Find a host that is running any byconity container, git clone this project, in the project folder, setup byconity client (TODO: tricky here)
+```
+mkdir bin
+docker cp byconity-server:/root/app/usr/bin/clickhouse bin/
+
+```
 
 ## Sharing of physical machines
 If you have limited resources, you can share physical machines for this practice. 
