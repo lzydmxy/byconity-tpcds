@@ -31,9 +31,9 @@ chmod a+x *.sh
 ```
 
 ### Generate data
-parameters used in this step: PARALLEL
+$1 is the data size, $2 is parallel
 ```
-./gen_data.sh 100
+./gen_data.sh 100 16
 ```
 
 ### Populate data to ByConity

@@ -3,7 +3,7 @@ set -e
 source ./helper.sh
 
 SIZE=$1
-REPLACE_FLAG=$2
+PARALLEL=$2
 
 usage() {
 	echo "usage: $0 <size(gb)> <flag>"
@@ -23,14 +23,6 @@ gen_data() {
 		seq 1 $PARALLEL | xargs -t -P$PARALLEL -I__ \
 		$TOOLS_PATH/dsdgen -SCALE $DATASIZE -DELIMITER \| -PARALLEL $PARALLEL -CHILD __ -TERMINATE N \
 			-RNGSEED $SEED -DISTRIBUTIONS $TOOLS_PATH/tpcds.idx -DIR $CSVPATH 2>&1 | tee -a $OUTPUT_LOG
-	fi
-
-	[ $SIZE -eq 1 ] && cp tpcds1_fix/web_page.dat $CSVPATH || true
-	if [ "$REPLACE_FLAG"x == "1"x ]; then
-		for f in $(ls $CSVPATH); do
-			log "Replacing  empty cell in $CSVPATH/$f"
-			sed -i "s#||#|\\\N|#g;s#||#|\\\N|#g" $CSVPATH/$f
-		done
 	fi
 }
 
