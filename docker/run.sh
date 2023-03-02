@@ -28,6 +28,8 @@ function run_read_worker() {
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
+    -e VIRTUAL_WAREHOUSE_ID=vw_default \
+    -e WORKER_GROUP_ID=wg_default \
     --expose 18690 \
     --expose 18691 \
     --expose 18692 \
@@ -42,6 +44,8 @@ function run_write_worker() {
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
+    -e VIRTUAL_WAREHOUSE_ID=vw_write \
+    -e WORKER_GROUP_ID=wg_write \
     --expose 18696 \
     --expose 18697 \
     --expose 18698 \
