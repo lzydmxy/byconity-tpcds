@@ -17,14 +17,14 @@ Resource requirements of each components.
 | ResourceManager | 8   | 16G  | 10G  | 1      |
 
 ### 1.1 Docker deployment
-1. Pull docker images
-```
-docker pull byconity/byconity-server:v0.2
-```
-2. Setup server ip addresses in the config/cnch_config.xml, replace the {xxx_address} with your actual server address. This includes server, tso, deamon manager, read worker and write worker. You may need to adjust the xml sections of nodes according to the actual number of nodes you want to run for the servers and write/read workers. You may also need to adjust the ports that could cause conflicts on your environment.
-3. Replace the config/fdb.cluster with the fdb.cluster file generated in the FDB setup step above.
-4. Adjust the parameters in the run.sh. especially the cpus and memeory you want to allocate to each component, according to the requirements table described above.
-5. Initial and start the ByConity cluster:
+1. Setup server ip addresses in the config/cnch_config.xml, replace the {xxx_address} with your actual server address. This includes server, tso, deamon manager, read worker and write worker. You may need to adjust the xml sections of nodes according to the actual number of nodes you want to run for the servers and write/read workers. You may also need to adjust the ports that could cause conflicts on your environment.
+2. Replace the config/fdb.cluster with the fdb.cluster file generated in the FDB setup step above.
+3. Adjust the parameters in the run.sh. especially the cpus and memeory you want to allocate to each component, according to the requirements table described above.
+4. Pull docker images to all the machines that you want to install ByConity components:
+    ```
+    docker pull byconity/byconity-server:v0.2
+    ```
+5. Initial and start the ByConity components:
     1). Start TSO in 1 machine: ./run.sh tso
     2). Start servers, each server in 1 machine: ./run.sh server
     3). Start the Deamon Manager in 1 machine: ./run.sh dm
