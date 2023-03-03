@@ -13,6 +13,7 @@ TIME_FILE=$LOGDIR/time.txt
 
 echo "qid,duration,status" > "$RESULT"
 
+log "Create stats for tables..."
 clickhouse_client "create stats if not exists all" -d "$DATABASE"
 clickhouse_client "show stats all format PrettyCompact" -d "$DATABASE" >> $TRACE_LOG
 
