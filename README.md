@@ -10,7 +10,7 @@ sudo apt-get install gcc make flex bison byacc git time
 ```
 
 ### Install ByConity client
-Make sure the ByConity client are installed. You can install the package from [this page](https://github.com/ByConity/ByConity/releases). After installation you have to move the `clickhouse` binary to `bin` folder in this project.
+Make sure the ByConity client are installed. You can install the package from [this page](https://github.com/ByConity/ByConity/releases), and then find  `clickhouse` binary and move it to `bin` folder in the project. Or you can copy the binary from any existing installations. E.g. an existing ByConity docker container.
 
 ### Setup paramters
 ```
