@@ -21,18 +21,18 @@ Resource requirements of each components.
 2. Setup server ip addresses in the `config/cnch_config.xml`, replace the `{xxx_address}` with your actual server address. This includes server, tso, deamon manager, read worker and write worker. You may need to adjust the xml sections of nodes according to the actual number of nodes you want to run for the servers and write/read workers. You may also need to adjust the ports that could cause conflicts on your environment.
 3. Replace the `config/fdb.cluster` with the `fdb.cluster` file generated in the FDB setup step above.
 4. Adjust the parameters in the run.sh. especially the cpus and memeory you want to allocate to each component, according to the requirements table described above.
-5. On every host that you need you deploy ByConity components, do the following:
-    1). Copy the docker folder to the host.
-    2). Pull docker images:
+5. On every host that you need you deploy ByConity components, do the following:  
+    1). Copy the docker folder to the host.  
+    2). Pull docker images:  
     ```
     docker pull byconity/byconity-server:v0.2
     ```
-6. Initial and start the ByConity components:
-    1). Start TSO on 1 host: `./run.sh tso`
-    2). Start servers, each server on 1 host: `./run.sh server`
-    3). Start the Deamon Manager on 1 host: `./run.sh dm`
-    4). Start write workers, each write worker on 1 host: `./run.sh write_worker`
-    5). Start read workers, each read worker on 1 host: `./run.sh read_worker`
+6. Initial and start the ByConity components:  
+    1). Start TSO on 1 host: `./run.sh tso`.   
+    2). Start servers, each server on 1 host: `./run.sh server`.  
+    3). Start the Deamon Manager on 1 host: `./run.sh dm`.  
+    4). Start write workers, each write worker on 1 host: `./run.sh write_worker`.  
+    5). Start read workers, each read worker on 1 host: `./run.sh read_worker`.  
 7. You can restart the ByConity components by: `./run.sh stop {component_name}`, and `./run.sh stop {component_name}`, the `component_name` is the same as described in #6.
 
 ### 1.2 Package deployment
@@ -40,8 +40,8 @@ Resource requirements of each components.
 2. On every host that you need you deploy ByConity components, do the following:
     1). Install FoundationDB client package, you can find the releases on [this page](https://github.com/apple/foundationdb/releases). Make sure you install the same version as the FoundationDB server which described above.
     ```
-        curl -L -o foundationdb-clients_7.1.25-1_amd64.deb https://github.com/apple/foundationdb/releases/download/7.1.25/foundationdb-clients_7.1.25-1_amd64.deb
-        sudo dpkg -i foundationdb-clients_7.1.27-1_amd64.deb
+    curl -L -o foundationdb-clients_7.1.25-1_amd64.deb https://github.com/apple/foundationdb/releases/download/7.1.25/foundationdb-clients_7.1.25-1_amd64.deb
+    sudo dpkg -i foundationdb-clients_7.1.27-1_amd64.deb
     ```
     2). Install the ByConity common package `byconity-common-static`.
     ```
