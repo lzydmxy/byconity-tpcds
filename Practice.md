@@ -83,7 +83,7 @@ If you have limited resources, you can share physical machines for this practice
 
 ## 2. Setup client
 1. Find a machine that you want to setup as the client to run TPC-DS. Git clone byconity-tpcds project.
-2. In the project folder, setup byconity client, you can install the client package from [this page](https://github.com/ByConity/ByConity/releases) and copy the clickhouse binary to project bin/. Or if you host has byconity container, you can copy the binary out.
+2. You can install the package from [this page](https://github.com/ByConity/ByConity/releases), and then find  `clickhouse` binary and move it to `bin` folder in the project. Or you can copy the binary from any existing installations. E.g. an existing ByConity docker container.
     ```
     mkdir bin
     docker cp byconity-server:/root/app/usr/bin/clickhouse bin/
