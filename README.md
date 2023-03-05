@@ -15,37 +15,38 @@ You can install the package from [this page](https://github.com/ByConity/ByConit
 ### Setup paramters
 ```
 cp config.sh.tpl config.sh
-# edit config.sh to set up paramaters ...
 ```
+Edit config.sh to set up paramaters. Please refer to the comments in the file.
 
-### Grant access to scripts
+### Grant access to all scripts
 ```
 chmod a+x *.sh
 ```
 
 ### Build tpcds tools
+Run the command to build TPD-DS tools, the tool will be generated to `build` folder
 ```
 ./build.sh
 ```
 
 ### Generate data
-$1 is the data size, $2 is parallel
+Run the command to generated TPD-DS data files. In the command, $1 is the data size, $2 is parallel. The data file will be generated into `data_tpcds_{data_size}` folder
 ```
 ./gen_data.sh 100 16
 ```
 
 ### Populate data to ByConity
-parameters used in this step: all parameters
+Run the command to populate the TPD-DS data from the data files to ByConity. $1 is the data size.
 ```
 ./populate_data.sh 100
 ```
 
 ### Run the benchmark
-parameters used in this step: all parameters
+Run TPD-DS benchmark on ByConity. $1 is the data size.
 ```
 ./benchmark.sh 100
 ```
 
 ### Check the results
 In the logs folder, check the result.csv for the result of TPC-DS, the format is ['Query ID', 'Time in ms', 'Status' (0 is normal)]
-check trace.log for the detail of queries running in the benchmark.
+Check trace.log for the detail of queries running in the benchmark.

@@ -1,3 +1,4 @@
+# Configurations for the server connection, including ip (required), tcp_port (required), user (optional) and password (optional) 
 SRV_IP=
 SRV_TCP_PORT=
 SRV_USER=
