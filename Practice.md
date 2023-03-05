@@ -37,7 +37,7 @@ Resource requirements of each components.
 
 ### 1.2 Package deployment
 1. Find the ByConity releases on [this page](https://github.com/ByConity/ByConity/releases)
-2. On every host that you need you deploy ByConity components, do the following:
+2. On every host that you need you deploy ByConity components, do the following:  
     1). Install FoundationDB client package, you can find the releases on [this page](https://github.com/apple/foundationdb/releases). Make sure you install the same version as the FoundationDB server which described above.
     ```
     curl -L -o foundationdb-clients_7.1.25-1_amd64.deb https://github.com/apple/foundationdb/releases/download/7.1.25/foundationdb-clients_7.1.25-1_amd64.deb
