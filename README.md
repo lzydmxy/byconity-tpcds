@@ -9,10 +9,8 @@ make sure you have following packages install in your syste: gcc, make, flex, bi
 sudo apt-get install gcc make flex bison byacc git time
 ```
 
-### Install Clickhouse client
-```
-cd bin && curl https://clickhouse.com/ | sh && cd ..
-```
+### Install ByConity client
+You can install the package from [this page](https://github.com/ByConity/ByConity/releases). After installation you have to move the `clickhouse` binary to `bin` folder in this project.
 
 ### Setup paramters
 ```
