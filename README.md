@@ -4,13 +4,13 @@
 ## Run TPC-DS
 
 ### Install required packages
-make sure you have following packages install in your syste: gcc, make, flex, bison, byacc, git, time
+Make sure you have following packages install in your syste: gcc, make, flex, bison, byacc, git, time
 ```
 sudo apt-get install gcc make flex bison byacc git time
 ```
 
 ### Install ByConity client
-You can install the package from [this page](https://github.com/ByConity/ByConity/releases). After installation you have to move the `clickhouse` binary to `bin` folder in this project.
+Make sure the ByConity client are installed. You can install the package from [this page](https://github.com/ByConity/ByConity/releases). After installation you have to move the `clickhouse` binary to `bin` folder in this project.
 
 ### Setup paramters
 ```
