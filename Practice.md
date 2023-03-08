@@ -15,6 +15,7 @@ Resource requirements of each components.
 | Read Worker     | 16  | 100G | 100G  | >=3    |
 | DaemonManager   | 4   | 10G  | 10G  | 1      |
 | ResourceManager | 8   | 16G  | 10G  | 1      |
+| Client | 8+   | 16G  | 200G  | 1      |
 
 ### 1.1 Docker deployment
 1. Go to the docker folder.
