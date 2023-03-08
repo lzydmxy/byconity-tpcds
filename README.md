@@ -1,5 +1,5 @@
 # byconity-tpcds
-
+This project leverages official TPC-DS toolkit. https://www.tpc.org/tpcds/
 
 ## Run TPC-DS
 
