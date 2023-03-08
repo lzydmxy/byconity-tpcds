@@ -1,5 +1,4 @@
 # byconity-tpcds
-THE TPC SOFTWARE IS AVAILABLE WITHOUT CHARGE FROM TPC.
 
 ## Run TPC-DS
 
@@ -50,3 +49,7 @@ Run TPD-DS benchmark on ByConity. $1 is the data size.
 ### Check the results
 In the logs folder, check the result.csv for the result of TPC-DS, the format is ['Query ID', 'Time in ms', 'Status' (0 is normal)]
 Check trace.log for the detail of queries running in the benchmark.
+
+<br/>
+
+THE SOFTWARE “byconity-tpcds” PROVIDED TO YOU BY TRANSACTION PROCESSING PERFORMANCE COUNCIL ("TPC") WILL BE SUBJECT TO THE TERMS AND CONDITIONS OF THIS [EULA](https://github.com/ByConity/byconity-tpcds/blob/main/tpcds-v2.13.0rc1/EULA.txt)
