@@ -1,5 +1,5 @@
 # byconity-tpcds
-This project leverages official TPC-DS toolkit. https://www.tpc.org/tpcds/
+THE TPC SOFTWARE IS AVAILABLE WITHOUT CHARGE FROM TPC.
 
 ## Run TPC-DS
 
