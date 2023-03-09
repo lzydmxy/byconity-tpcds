@@ -26,7 +26,7 @@ Resource requirements of each components.
     1). Copy the docker folder to the host.  
     2). Pull docker images:  
     ```
-    docker pull byconity/byconity-server:v0.2
+    docker pull byconity/byconity-server:stable
     ```
 6. Initial and start the ByConity components:  
     1). Start TSO on 1 host: `./run.sh tso`.   
