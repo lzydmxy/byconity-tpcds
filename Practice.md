@@ -17,7 +17,7 @@ Resource requirements of each components.
 | ResourceManager | 8   | 16G  | 10G  | 1      |
 | Client | 8+   | 16G+  | 200G  | 1      |
 
-### 1.1 Docker deployment
+### 1.1 Option 1: Docker deployment
 1. Make sure docker is installed in your system. You can follow the [official guide](https://docs.docker.com/engine/install/) to install.
 2. Go to the docker folder in this project. 
 3. Setup server ip addresses in the `config/cnch_config.xml`, replace the `{xxx_address}` with your actual server address. This includes server, tso, deamon manager, read worker and write worker. You may need to adjust the xml sections of nodes according to the actual number of nodes you want to run for the servers and write/read workers. You may also need to adjust the ports that could cause conflicts on your environment.
@@ -37,7 +37,7 @@ Resource requirements of each components.
     5). Start read workers, each read worker on 1 host: `./run.sh read_worker`.  
 8. You can restart the ByConity components by: `./run.sh stop {component_name}`, and `./run.sh stop {component_name}`, the `component_name` is the same as described in #6.
 
-### 1.2 Package deployment
+### 1.2 Option 2: Package deployment
 1. Find the ByConity releases on [this page](https://github.com/ByConity/ByConity/releases)
 2. On every host that you need you deploy ByConity components, do the following:  
     1). Install FoundationDB client package, you can find the releases on [this page](https://github.com/apple/foundationdb/releases). Make sure you install the same version as the FoundationDB server which described above.
