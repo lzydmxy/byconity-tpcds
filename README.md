@@ -3,7 +3,7 @@
 ## Run TPC-DS
 
 ### Install required packages
-Make sure you have following packages install in your syste: gcc, make, flex, bison, byacc, git, time
+Make sure you have following packages install in your system: gcc, make, flex, bison, byacc, git, time
 ```
 sudo apt-get install gcc make flex bison byacc git time
 ```
