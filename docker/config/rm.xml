@@ -15,18 +15,9 @@
         <count>10</count>
     </logger>
 
-    <listen_host>0.0.0.0</listen_host>
     <path>/root/app/logs/byconity-rm/</path>
-        <catalog>
-        <name_space>byconity_tpcds_test</name_space>
-    </catalog>
-
-    <catalog_service>
-        <type>fdb</type>
-        <fdb>
-            <cluster_file>/root/app/config/fdb.cluster</cluster_file>
-        </fdb>
-    </catalog_service>
+    <cnch_data_retention_time_in_sec>5</cnch_data_retention_time_in_sec>
+    <background_schedule_pool_size>6</background_schedule_pool_size>
 
     <rpc_port>18686</rpc_port>
 

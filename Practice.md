@@ -20,9 +20,9 @@ Resource requirements of each components.
 ### 1.1 Option 1: Docker deployment
 1. Make sure docker is installed in your system. You can follow the [official guide](https://docs.docker.com/engine/install/) to install.
 2. Go to the docker folder in this project. 
-3. Setup server ip addresses in the `config/cnch_config.xml`, replace the `{xxx_address}` with your actual server address. This includes server, tso, deamon manager, read worker and write worker. You may need to adjust the xml sections of nodes according to the actual number of nodes you want to run for the servers and write/read workers. You may also need to adjust the ports that could cause conflicts on your environment.
+3. Setup component ip addresses in the `config/cnch_config.xml`, replace the `{xxx_address}` with your actual server address. This includes xml sections of server, tso, deamon manager, read worker and write worker in `<service_discovery>`. You may need to adjust the numbers sections first, according to the actual count of nodes you want to run for the servers and write/read workers. You can optional adjust the ports that could cause conflicts on your environment. 
 4. Replace the `config/fdb.cluster` with the `fdb.cluster` file generated in the FDB setup step above.
-5. Adjust the parameters in the run.sh. especially the cpus and memeory you want to allocate to each component, according to the requirements table described above.
+5. Adjust the parameters in the `run.sh`. especially the cpus and memeory you want to allocate to each component, according to the requirements table described above. If you changed any port in `config/cnch_config.xml`, you also have to make corresponding changes here in `run.sh`.
 6. On every host that you need you deploy ByConity components, do the following:  
     1). Copy the docker folder to the host.  
     2). Pull docker images:  
@@ -49,7 +49,7 @@ Resource requirements of each components.
     ```
     sudo dpkg -i byconity-common-static_0.1.1.1_amd64.deb
     ```
-    3). Setup server addresses in the `/etc/byconity-server/cnch_config.xml`, the same way as described in #1.1. You can refer to the sections in `docker/config/cncn_config.xml` file in this project. 
+    3). Setup server addresses in the `/etc/byconity-server/cnch_config.xml`, the same way as described in #1.1. You can refer to the sections in `docker/config/cncn_config.xml` file in this project.  
     4). Replace the `/etc/byconity-server/fdb.config` with the `fdb.cluster` file generated in the FDB setup step above.
 3. Initial and start the ByConity components:
     1). Choose 1 host to run TSO, download the `byconity-tso` package and install.
@@ -63,18 +63,22 @@ Resource requirements of each components.
     2). Choose 1 host to run server, download the `byconity-server` package and install.
     ```
     sudo dpkg -i byconity-server_0.1.1.1_amd64.deb 
+    systemctl start byconity-server
     ```
     3). Choose 1 host to run deamon manager, download the `byconity-daemon-manager` package and install.
     ```
     sudo dpkg -i byconity-daemon-manager_0.1.1.1_amd64.deb 
+    systemctl start byconity-daemon-manager
     ```
     4). Choose 3+ hosts to run read worker, download the `byconity-worker` package and install.
     ```
     sudo dpkg -i byconity-worker_0.1.1.1_amd64.deb 
+    systemctl start byconity-worker
     ```
     5). Choose 3+ hosts to run write worker, download the `byconity-write-worker` package and install.
     ```
     sudo dpkg -i byconity-worker-write_0.1.1.1_amd64.deb 
+    systemctl start byconity-worker-write
     ```
 
 ### Sharing of physical machines
