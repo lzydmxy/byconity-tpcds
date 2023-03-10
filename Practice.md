@@ -43,7 +43,7 @@ Resource requirements of each components.
     1). Install FoundationDB client package, you can find the releases on [this page](https://github.com/apple/foundationdb/releases). Make sure you install the same version as the FoundationDB server which described above.
     ```
     curl -L -o foundationdb-clients_7.1.25-1_amd64.deb https://github.com/apple/foundationdb/releases/download/7.1.25/foundationdb-clients_7.1.25-1_amd64.deb
-    sudo dpkg -i foundationdb-clients_7.1.27-1_amd64.deb
+    sudo dpkg -i foundationdb-clients_7.1.25-1_amd64.deb
     ```
     2). Install the ByConity common package `byconity-common-static`.
     ```
