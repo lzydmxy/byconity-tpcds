@@ -44,8 +44,8 @@ function run_server() {
 
 function run_read_worker() {
     docker run -d --restart=on-failure \
-    --cpus 32 \
-    --memory 160g \
+    --cpus 16 \
+    --memory 120g \
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
