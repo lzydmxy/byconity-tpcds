@@ -18,23 +18,24 @@ Resource requirements of each components.
 | Client | 8+   | 16G+  | 200G  | 1      |
 
 ### 1.1 Docker deployment
-1. Go to the docker folder.
-2. Setup server ip addresses in the `config/cnch_config.xml`, replace the `{xxx_address}` with your actual server address. This includes server, tso, deamon manager, read worker and write worker. You may need to adjust the xml sections of nodes according to the actual number of nodes you want to run for the servers and write/read workers. You may also need to adjust the ports that could cause conflicts on your environment.
-3. Replace the `config/fdb.cluster` with the `fdb.cluster` file generated in the FDB setup step above.
-4. Adjust the parameters in the run.sh. especially the cpus and memeory you want to allocate to each component, according to the requirements table described above.
-5. On every host that you need you deploy ByConity components, do the following:  
+1. Make sure docker is installed in your system. You can follow the [official guide](https://docs.docker.com/engine/install/) to install.
+2. Go to the docker folder in this project. 
+3. Setup server ip addresses in the `config/cnch_config.xml`, replace the `{xxx_address}` with your actual server address. This includes server, tso, deamon manager, read worker and write worker. You may need to adjust the xml sections of nodes according to the actual number of nodes you want to run for the servers and write/read workers. You may also need to adjust the ports that could cause conflicts on your environment.
+4. Replace the `config/fdb.cluster` with the `fdb.cluster` file generated in the FDB setup step above.
+5. Adjust the parameters in the run.sh. especially the cpus and memeory you want to allocate to each component, according to the requirements table described above.
+6. On every host that you need you deploy ByConity components, do the following:  
     1). Copy the docker folder to the host.  
     2). Pull docker images:  
     ```
     docker pull byconity/byconity-server:stable
     ```
-6. Initial and start the ByConity components:  
+7. Initial and start the ByConity components:  
     1). Start TSO on 1 host: `./run.sh tso`.   
     2). Start servers, each server on 1 host: `./run.sh server`.  
     3). Start the Deamon Manager on 1 host: `./run.sh dm`.  
     4). Start write workers, each write worker on 1 host: `./run.sh write_worker`.  
     5). Start read workers, each read worker on 1 host: `./run.sh read_worker`.  
-7. You can restart the ByConity components by: `./run.sh stop {component_name}`, and `./run.sh stop {component_name}`, the `component_name` is the same as described in #6.
+8. You can restart the ByConity components by: `./run.sh stop {component_name}`, and `./run.sh stop {component_name}`, the `component_name` is the same as described in #6.
 
 ### 1.2 Package deployment
 1. Find the ByConity releases on [this page](https://github.com/ByConity/ByConity/releases)
