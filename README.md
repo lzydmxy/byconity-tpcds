@@ -29,7 +29,7 @@ Run the command to build TPD-DS tools, the tool will be generated to `build` fol
 ```
 
 ### Generate data
-Run the command to generated TPD-DS data files. In the command, $1 is the data size, $2 is parallel. The data file will be generated into `data_tpcds_{data_size}` folder
+Run the command to generated TPD-DS data files. In the command, $1 is the data size, $2 is parallel. The data file will be generated into `data_tpcds_{data_size}` folder. The data generation takes time. If you want to see the progress, watch the files generated in the `data_tpcds_{data_size}` folder.
 ```
 ./gen_data.sh 100 16
 ```
