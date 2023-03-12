@@ -293,7 +293,7 @@
     <max_session_timeout>3600</max_session_timeout>
 
     <!-- Default session timeout, in seconds. Default: 60. -->
-    <default_session_timeout>60</default_session_timeout>
+    <default_session_timeout>180</default_session_timeout>
 
     <!-- Parameters for embedded dictionaries, used in Yandex.Metrica.
          See https://clickhouse.yandex/docs/en/dicts/internal_dicts/

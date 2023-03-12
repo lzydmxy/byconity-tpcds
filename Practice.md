@@ -20,7 +20,7 @@ Resource requirements of each components.
 ### 1.1 Option 1: Docker deployment
 1. Make sure docker is installed in your system. You can follow the [official guide](https://docs.docker.com/engine/install/) to install.
 2. Go to the docker folder in this project. 
-3. Setup component ip addresses in the `config/cnch_config.xml`, replace the `{xxx_address}` with your actual server address. This includes xml sections of server, tso, deamon manager, read worker and write worker in `<service_discovery>`. You may need to adjust the numbers sections first, according to the actual count of nodes you want to run for the servers and write/read workers. You can optional adjust the ports that could cause conflicts on your environment. 
+3. Configure the `config/cnch_config.xml`. Setup host addresses in `<service_discovery>`, replace the `{xxx_address}` with your actual host address. This includes xml sections of server, tso, deamon manager and resource manager. You can optional adjust the ports that could cause conflicts on your environment. Setup hdfs namenode address in `<hdfs_nnproxy>`.
 4. Replace the `config/fdb.cluster` with the `fdb.cluster` file generated in the FDB setup step above.
 5. Adjust the parameters in the `run.sh`. especially the cpus and memeory you want to allocate to each component, according to the requirements table described above. If you changed any port in `config/cnch_config.xml`, you also have to make corresponding changes here in `run.sh`.
 6. On every host that you need you deploy ByConity components, do the following:  
@@ -32,9 +32,10 @@ Resource requirements of each components.
 7. Initial and start the ByConity components:  
     1). Start TSO on 1 host: `./run.sh tso`.   
     2). Start servers, each server on 1 host: `./run.sh server`.  
-    3). Start the Deamon Manager on 1 host: `./run.sh dm`.  
-    4). Start write workers, each write worker on 1 host: `./run.sh write_worker`.  
-    5). Start read workers, each read worker on 1 host: `./run.sh read_worker`.  
+    3). Start the deamon manager on 1 host: `./run.sh dm`.  
+    4). Start the resource manager on 1 host: `./run.sh rm`.      
+    5). Start write workers, each write worker on 1 host: `./run.sh write_worker <woker_id>`. `worker_id` is optional, if not specified, `<hostname>-write` will be used.
+    6). Start read workers, each read worker on 1 host: `./run.sh read_worker <woker_id>`. `worker_id` is optional, if not specified, `<hostname>-read` will be used.
 8. You can restart the ByConity components by: `./run.sh stop {component_name}`, and `./run.sh stop {component_name}`, the `component_name` is the same as described in #6.
 
 ### 1.2 Option 2: Package deployment
@@ -69,13 +70,17 @@ Resource requirements of each components.
     ```
     sudo dpkg -i byconity-daemon-manager_0.1.1.1_amd64.deb 
     systemctl start byconity-daemon-manager
+    4). Choose 1 host to run resource manager, download the `byconity-resource-manager` package and install.
     ```
-    4). Choose 3+ hosts to run read worker, download the `byconity-worker` package and install.
+    sudo dpkg -i byconity-resource-manager_0.1.1.1_amd64.deb 
+    systemctl start byconity-resource-manager
+    ```
+    5). Choose 3+ hosts to run read worker, download the `byconity-worker` package and install.
     ```
     sudo dpkg -i byconity-worker_0.1.1.1_amd64.deb 
     systemctl start byconity-worker
     ```
-    5). Choose 3+ hosts to run write worker, download the `byconity-write-worker` package and install.
+    6). Choose 3+ hosts to run write worker, download the `byconity-write-worker` package and install.
     ```
     sudo dpkg -i byconity-worker-write_0.1.1.1_amd64.deb 
     systemctl start byconity-worker-write
@@ -89,17 +94,34 @@ If you have limited resources, you can share physical machines for this practice
 
 ## 2. Setup client
 1. Find a machine that you want to setup as the client to run TPC-DS. Git clone byconity-tpcds project.
-2. You can install the package from [this page](https://github.com/ByConity/ByConity/releases), and then find  `clickhouse` binary and copy it to `bin` folder in the project. Or you can copy the binary from any existing installations. E.g. an existing ByConity docker container.
+2. Copy the clickhouse binary or make links to the `bin` folder in this project.  
+    If you are running ByConity using docker, you can copy it from any existing ByConity docker container.
     ```
     mkdir bin
     docker cp byconity-server:/root/app/usr/bin/clickhouse bin/
     ````
+    If you package installed ByConity common package. You can copy or link `/usr/bin/clickhouse` to the `bin` folder in this project.
 3. Make sure FoundationDB client is install on the client machine, as described in #1.2
 
-## 3. Run TPC-DS benchmark
+## 3. Verify your deployment
+1. Connect to the ByConity server
+    ```
+    bin/clickhouse client --host=<your_server_host> --port=<your_server_tcp_port>  --enable_optimizer=1 --dialect_type='ANSI'
+    ```
+2. Run some basic queries
+    ```
+    CREATE DATABASE test;
+    USE test;
+    CREATE TABLE events (`id` UInt64, `s` String) ENGINE = CnchMergeTree ORDER BY id;
+    INSERT INTO events SELECT number, toString(number) FROM numbers(10);
+    SELECT * FROM events ORDER BY id;
+    ```
+3. Make sure you get the results with no exceptions.
+
+## 4. Run TPC-DS benchmark
 Follow [this guide](https://github.com/ByConity/byconity-tpcds/blob/main/README.md) to run the TPC-DS benchmark on ByConity. Collect the results. 
 
-## 4. Add more workers and rerun
+## 5. Add more workers and rerun
 Mofity config/cnch_config.xml to add 2+ more read workers. Deploy the config to server node and restart server.
 Rerun the TPC-DS benchmark. Collect the results.
 

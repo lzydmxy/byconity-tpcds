@@ -43,14 +43,19 @@ function run_server() {
 }
 
 function run_read_worker() {
+    local worker_id=$1
+    if [ -z "$worker_id" ]; then
+		worker_id=`hostname`-read
+	fi
     docker run -d --restart=on-failure \
     --cpus 16 \
-    --memory 120g \
+    --memory 60g \
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
     -e VIRTUAL_WAREHOUSE_ID=vw_default \
     -e WORKER_GROUP_ID=wg_default \
+    -e WORKER_ID=$worker_id\
     --expose 18690 \
     --expose 18691 \
     --expose 18692 \
@@ -61,6 +66,10 @@ function run_read_worker() {
 }
 
 function run_write_worker() {
+    local worker_id=$1
+    if [ -z "$worker_id" ]; then
+		worker_id=`hostname`-write
+	fi
     docker run -d --restart=on-failure \
     --cpus 16 \
     --memory 60g \
@@ -69,6 +78,7 @@ function run_write_worker() {
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
     -e VIRTUAL_WAREHOUSE_ID=vw_write \
     -e WORKER_GROUP_ID=wg_write \
+    -e WORKER_ID=$worker_id\
     --expose 28696 \
     --expose 28697 \
     --expose 28698 \
@@ -171,9 +181,9 @@ if [ "$1" = "tso" ]; then
 elif [ "$1" = "server" ]; then
     run_server
 elif [ "$1" = "read_worker" ]; then
-    run_read_worker
+    run_read_worker $2
 elif [ "$1" = "write_worker" ]; then
-    run_write_worker
+    run_write_worker $2
 elif [ "$1" = "dm" ]; then
     run_dm
 elif [ "$1" = "rm" ]; then
