@@ -12,10 +12,10 @@ Resource requirements of each components.
 | TSO             | 2   | 500M | 5G   | 1      |
 | Server          | 16  | 60G  | 100G   | >=1   |
 | Write Worker    | 16  | 60G  | 100G  | >=3    |
-| Read Worker     | 16  | 100G | 100G  | >=3    |
+| Read Worker     | 16  | 60G | 100G  | >=3    |
 | DaemonManager   | 4   | 10G  | 10G  | 1      |
 | ResourceManager | 8   | 16G  | 10G  | 1      |
-| Client | 8+   | 16G+  | 200G  | 1      |
+| Client         | 8+   | 16G+  | 200G  | 1     |
 
 ### 1.1 Option 1: Docker deployment
 1. Make sure docker is installed in your system. You can follow the [official guide](https://docs.docker.com/engine/install/) to install.
@@ -88,9 +88,8 @@ Resource requirements of each components.
 
 ### Sharing of physical machines
 If you have limited resources, you can share physical machines for this practice. 
-1. You can install HDFS name node, TSO, deamon manager, and 1 ByConity Server to the same machine. 
-2. 1 ByConity worker can share the machine with 1 HDFS data node, and 1 FDB node. 
-3. If you are using docker, you can launch multiple ByConity workers in the same machine, once you have enough resource to allocate.
+1. You can install HDFS name node, TSO, deamon manager, and 1 ByConity Server to the same host. 
+2. 1 read worker can share the host with 1 write worker. Furthermore, they can share the host with 1 HDFS data node, and 1 FDB node. 
 
 ## 2. Setup client
 1. Find a machine that you want to setup as the client to run TPC-DS. Git clone byconity-tpcds project.
