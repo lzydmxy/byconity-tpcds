@@ -70,6 +70,7 @@ Resource requirements of each components.
     ```
     sudo dpkg -i byconity-daemon-manager_0.1.1.1_amd64.deb 
     systemctl start byconity-daemon-manager
+    ```
     4). Choose 1 host to run resource manager, download the `byconity-resource-manager` package and install.
     ```
     sudo dpkg -i byconity-resource-manager_0.1.1.1_amd64.deb 
