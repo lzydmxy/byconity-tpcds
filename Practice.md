@@ -122,6 +122,5 @@ If you have limited resources, you can share physical machines for this practice
 Follow [this guide](https://github.com/ByConity/byconity-tpcds/blob/main/README.md) to run the TPC-DS benchmark on ByConity. Collect the results. 
 
 ## 5. Add more workers and rerun
-Mofity config/cnch_config.xml to add 2+ more read workers. Deploy the config to server node and restart server.
-Rerun the TPC-DS benchmark. Collect the results.
+Deploy 2+ new read workers. You only need to init and launch the new workers. They can be automatically discovered by the resource manager. There is no need to restart the shared services like server, dm, etc. After finishing, rerun the TPC-DS benchmark, and then collect the results.
 
