@@ -76,14 +76,20 @@ Resource requirements of each components.
     sudo dpkg -i byconity-resource-manager_0.1.1.1_amd64.deb 
     systemctl start byconity-resource-manager
     ```
-    5). Choose 3+ hosts to run read worker, download the `byconity-worker` package and install.
+    5). Choose 3+ hosts to run read worker, download the `byconity-worker` package and install. Before starting the service, export the environment variables for resource manager discovery. `WORKER_ID` has to be unique.
     ```
     sudo dpkg -i byconity-worker_0.1.1.1_amd64.deb 
+    export VIRTUAL_WAREHOUSE_ID=vw_default
+    export WORKER_GROUP_ID=wg_default
+    export WORKER_ID=read-worker-1
     systemctl start byconity-worker
     ```
-    6). Choose 3+ hosts to run write worker, download the `byconity-write-worker` package and install.
+    6). Choose 3+ hosts to run write worker, download the `byconity-write-worker` package and install. Before starting the service, export the environment variables for resource manager discovery. `WORKER_ID` has to be unique.
     ```
     sudo dpkg -i byconity-worker-write_0.1.1.1_amd64.deb 
+    export VIRTUAL_WAREHOUSE_ID=vw_write
+    export WORKER_GROUP_ID=wg_write
+    export WORKER_ID=write-worker-1
     systemctl start byconity-worker-write
     ```
 
