@@ -1,9 +1,9 @@
 # Practice of ByConity Cluster Setup and TPC-DS Benckmark
 
-## 1. Preperation
+## 1. Preparation
 1. Install Foundation DB to 3 physical machines. You can follow [this guide](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/FDB_installation.md)
 2. Setup HDFS to 4+ physical machines, with 1 name node and 3+ data nodes. You can follow [this guide](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/HDFS_installation.md)
-3. You have 2 options to deploy a ByConity Cluster, Using Docker or using package installation.
+3. You have 2 options to deploy a ByConity Cluster, using Docker or using package installation.
 
 Resource requirements of each components.
 
@@ -20,16 +20,16 @@ Resource requirements of each components.
 ### 1.1 Option 1: Docker deployment
 1. Make sure docker is installed in your system. You can follow the [official guide](https://docs.docker.com/engine/install/) to install.
 2. Go to the docker folder in this project. 
-3. Configure the `config/cnch_config.xml`. Setup host addresses in `<service_discovery>`, replace the `{xxx_address}` with your actual host address. This includes xml sections of server, tso, deamon manager and resource manager. You can optional adjust the ports that could cause conflicts on your environment. Setup hdfs namenode address in `<hdfs_nnproxy>`.
+3. Configure the `config/cnch_config.xml`. Setup host addresses in `<service_discovery>`, replace the `{xxx_address}` with your actual host address. This includes xml sections of server, tso, deamon manager and resource manager. You can optionally adjust the ports that could cause conflicts on your environment. Setup hdfs namenode address in `<hdfs_nnproxy>`.
 4. Replace the `config/fdb.cluster` with the `fdb.cluster` file generated in the FDB setup step above.
-5. Adjust the parameters in the `run.sh`. especially the cpus and memeory you want to allocate to each component, according to the requirements table described above. If you changed any port in `config/cnch_config.xml`, you also have to make corresponding changes here in `run.sh`.
-6. On every host that you need you deploy ByConity components, do the following:  
+5. Adjust the parameters in the `run.sh`. especially the CPUs and memory you want to allocate to each component, according to the requirements table described above. If you changed any port in `config/cnch_config.xml`, you also have to make corresponding changes here in `run.sh`.
+6. On every host that you need to deploy ByConity components, do the following:  
     1). Copy the docker folder to the host.  
     2). Pull docker images:  
     ```
     docker pull byconity/byconity-server:stable
     ```
-7. Initial and start the ByConity components:  
+7. Initialize and start the ByConity components:  
     1). Start TSO on 1 host: `./run.sh tso`.   
     2). Start servers, each server on 1 host: `./run.sh server`.  
     3). Start the deamon manager on 1 host: `./run.sh dm`.  
@@ -40,8 +40,8 @@ Resource requirements of each components.
 
 ### 1.2 Option 2: Package deployment
 1. Find the ByConity releases on [this page](https://github.com/ByConity/ByConity/releases)
-2. On every host that you need you deploy ByConity components, do the following:  
-    1). Install FoundationDB client package, you can find the releases on [this page](https://github.com/apple/foundationdb/releases). Make sure you install the same version as the FoundationDB server which described above.
+2. On every host that you need to deploy ByConity components, do the following:  
+    1). Install FoundationDB client package, you can find the releases on [this page](https://github.com/apple/foundationdb/releases). Make sure you install the same version as the FoundationDB server described above.
     ```
     curl -L -o foundationdb-clients_7.1.25-1_amd64.deb https://github.com/apple/foundationdb/releases/download/7.1.25/foundationdb-clients_7.1.25-1_amd64.deb
     sudo dpkg -i foundationdb-clients_7.1.25-1_amd64.deb
