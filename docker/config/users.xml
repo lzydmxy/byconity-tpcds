@@ -19,6 +19,7 @@
             <default_database_engine>Cnch</default_database_engine>
             <cnch_data_retention_time_in_sec>5</cnch_data_retention_time_in_sec>
             <background_schedule_pool_size>6</background_schedule_pool_size>
+            <exchange_timeout_ms>180000</exchange_timeout_ms>
         </default>
 
         <!-- Profile that allows only read queries. -->

@@ -14,4 +14,4 @@ CLIENT_ARGS=
 DB_PREFIX=
 
 #Use engine time (-t from client). optional, default: false
-ENABLE_ENGINE_TIME=false
+ENABLE_ENGINE_TIME=true

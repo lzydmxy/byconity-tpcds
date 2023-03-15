@@ -83,7 +83,7 @@ function benchmark_query() {
 
 TIMEOUT_VAL=999999
 
-QPATH="$SQL_DIR"
+QPATH="$SQL_DIR/standard"
 
 TOTAL_DURATION=0
 
