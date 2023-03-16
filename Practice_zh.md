@@ -2,6 +2,7 @@
 
 ## 1. 准备
 1.  根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/FDB_installation_zh.md)将Foundation DB安装到3台物理机上。 
+
 2.  根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/HDFS_installation_zh.md)将 HDFS 设置为 4 台以上物理机，具有 1 个name node和 3 个以上data node。
 3.  您可以使用2种方式来部署ByConity集群： Docker 或软件包。
 
@@ -18,6 +19,7 @@
 | Client | 8+ | 16G+ | 200G | 1 |
 
 ### 1.1 方式一：Docker部署
+
 1.  确保系统中安装了docker。可以参考[官方文档](https://docs.docker.com/engine/install/)安装
 2.  转到 项目中的docker 文件夹。
 3.  配置`config/cnch_config.xml`。设置服务器 ip 地址，将 `{xxx_address}` 替换为实际服务器地址。这包括服务器、tso、deamon manager 和 resource manager。如有需要你可以调整可能导致冲突的端口。然后在`<hdfs_nnproxy>`中设置HDFS namenode的地址
@@ -26,11 +28,9 @@
 6.  在您需要部署 ByConity 组件的每台主机上，执行以下操作：
       1）将 docker 文件夹复制到主机。
       2）拉取docker镜像：
-      
     ```
     docker pull byconity/byconity-server:stable
     ```
-
 7.  初始化并启动ByConity组件：
       1）在 1 台主机上启动 TSO: `./run.sh tso`.
       2）启动server，每个server运行在 1 台主机上：`./run.sh server`.
@@ -38,7 +38,6 @@
       4）在1台主机上启动 resource manager：`./run.sh rm`.
       5）启动write workers，每个write worker运行在1台主机上：`./run.sh write_worke``r <worker_id>`. `worker_id` 是可选的，如果不设，会取`<hostname>-read` .
       6）启动read workers，每个read worker运行在1台主机上：`./run.sh read_worke``r <worker_id>`. `worker_id` 是可选的，如果不设，会取`<hostname>-read`.
-      
 8.  您可以通过以下方式重启 ByConity 组件：`./run.sh stop {component_name}`, 以及 `./run.sh` `start` `{component_name}`, `component_name` 与#6中的描述相同
 
 
