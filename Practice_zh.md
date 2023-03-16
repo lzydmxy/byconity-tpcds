@@ -177,10 +177,10 @@ chmod a+x *.sh
 ```
 
 #### 4.8 检查结果
-在logs文件夹中，查看TPC-DS的运行结果，其中
-1）result.csv，格式为['Query ID', 'Time in ms', 'Status' (0 为正常)] 
-2）trace.log 详细的基准测试中运行的查询。
-3) output.log 运行过程的日志输出
+在logs文件夹中，查看TPC-DS的运行结果，其中：  
+1）result.csv，格式为['Query ID', 'Time in ms', 'Status' (0 为正常)]   
+2）trace.log 详细的基准测试中运行的查询。  
+3) output.log 运行过程的日志输出。  
 
 
 ## 5. 添加更多workers并重新运行
