@@ -79,24 +79,18 @@ Resource requirements of each components.
     5). Choose 3+ hosts to run read worker, download the `byconity-worker` package and install. Before starting the service, export the environment variables for resource manager discovery. `WORKER_ID` has to be unique.
     ```
     sudo dpkg -i byconity-worker_0.1.1.1_amd64.deb 
-    export VIRTUAL_WAREHOUSE_ID=vw_default
-    export WORKER_GROUP_ID=wg_default
-    export WORKER_ID=read-worker-1
     systemctl start byconity-worker
     ```
     6). Choose 3+ hosts to run write worker, download the `byconity-write-worker` package and install. Before starting the service, export the environment variables for resource manager discovery. `WORKER_ID` has to be unique.
     ```
     sudo dpkg -i byconity-worker-write_0.1.1.1_amd64.deb 
-    export VIRTUAL_WAREHOUSE_ID=vw_write
-    export WORKER_GROUP_ID=wg_write
-    export WORKER_ID=write-worker-1
     systemctl start byconity-worker-write
     ```
 
 ### Sharing of physical machines
 If you have limited resources, you can share physical machines for this practice. 
 1. You can install HDFS name node, TSO, deamon manager, and 1 ByConity Server to the same host. 
-2. 1 read worker can share the host with 1 write worker. Furthermore, they can share the host with 1 HDFS data node, and 1 FDB node. 
+2. 1 read / write worker can share the host with 1 HDFS data node, and 1 FDB node. For docker mode, 1 read worker can also share with 1 write worker, but for pkg installation mode, it can't.
 
 ## 2. Setup client
 1. Find a machine that you want to setup as the client to run TPC-DS. Git clone byconity-tpcds project.
