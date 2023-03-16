@@ -1,6 +1,6 @@
 # ByConity集群搭建与TPC-DS Benchmark实践
 
-## 1. 1.  # 准备
+## 1. 准备
 1.  根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/FDB_installation_zh.md)将Foundation DB安装到3台物理机上。 
 2.  根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/HDFS_installation_zh.md)将 HDFS 设置为 4 台以上物理机，具有 1 个name node和 3 个以上data node。
 3.  您可以使用2种方式来部署ByConity集群： Docker 或软件包。
@@ -17,7 +17,7 @@
 | ResourceManager | 8 | 16G | 10G | 1 |
 | Client | 8+ | 16G+ | 200G | 1 |
 
-### 1.1 **方式一：****Docker** **部署**
+### 1.1 方式一：Docker部署
 1.  确保系统中安装了docker。可以参考[官方文档](https://docs.docker.com/engine/install/)安装
 2.  转到 项目中的docker 文件夹。
 3.  配置`config/cnch_config.xml`。设置服务器 ip 地址，将 `{xxx_address}` 替换为实际服务器地址。这包括服务器、tso、deamon manager 和 resource manager。如有需要你可以调整可能导致冲突的端口。然后在`<hdfs_nnproxy>`中设置HDFS namenode的地址
@@ -41,8 +41,11 @@
       
 8.  您可以通过以下方式重启 ByConity 组件：`./run.sh stop {component_name}`, 以及 `./run.sh` `start` `{component_name}`, `component_name` 与#6中的描述相同
 
+
 ### 1.2 **方式二：****软件包****部署**
+
 1.  在[此页面](https://github.com/ByConity/ByConity/releases)上找到 ByConity 安装包。
+
 2.  在您需要部署 ByConity 组件的每台主机上，执行以下操作：
     1) 安装 FoundationDB 客户端包，你可以在[这个页面](https://github.com/apple/foundationdb/releases)上找到。 确保安装与 FoundationDB 服务器相同的版本。
     ```
@@ -55,6 +58,7 @@
     ```
     3) 在 `/etc/byconity-server/cnch_config.xml`中设置服务器地址，方法与#1.1 中描述的相同。 可以参考本项目中 `docker/config/cncn_config.xml` 对应的部分 。
     4) 将 `/etc/byconity-server/fdb.config` 替换为为在上面的 FDB 设置步骤中生成的`fdb.cluster` 文件。
+
 3.  初始化并启动 ByConity 组件：
     1) 选择1台主机运行TSO，下载byconity-tso包并安装。
     ```
@@ -103,6 +107,7 @@
 
 
 ## 2. **设置客户端**
+
 1.  找到一台客户端的机器来运行 TPC-DS 。git clone byconity-tpcds 项目。
 2.  需要将`clickhouse` 执行文件拷贝或者链接到本项目中的`bin` 文件夹中
     如果你是通过docker运行ByConity组件的，你可以从任何现有ByConity docker容器中复制执行文件，比如
@@ -115,6 +120,7 @@
 
 
 ## 3. 验证部署
+
 1. 连接到ByConity server
     ```
     bin/clickhouse client --host=<your_server_host> --port=<your_server_tcp_port>  --enable_optimizer=1 --dialect_type='ANSI'
@@ -131,6 +137,7 @@
 
 
 ## 4. 运行TPC-DS基准测试
+
 按照以下指南在 ByConity 上运行 TPC-DS 基准测试并收集结果。
 
 ### 4.1 所需安装包
@@ -147,12 +154,10 @@ cp config.sh.tpl config.sh
 
 编辑 config.sh 以设置参数，请参考文件中的注释。
 
-
 ### 4.3 授予对所有脚本的访问权限
 ```Plaintext
 chmod a+x *.sh
 ```
-
 
 ### 4.4 构建 tpcds 工具
 运行命令构建TPD-DS工具，工具会生成 `build` 文件夹
@@ -181,6 +186,6 @@ chmod a+x *.sh
 ### 4.8 检查结果
 在logs文件夹中，查看TPC-DS结果的result.csv，格式为['Query ID', 'Time in ms', 'Status' (0 为正常)] ，可以再trace.log 查看详细的基准测试中运行的查询。
 
+
 ## 5. 添加更多workers并重新运行
 新部署 2 个以上的read worker，只需正确启动worker即可，无需重启server等共享服务，新的worker会被resource manager发现。 部署好以后重新运行 TPC-DS 基准测试，并收集结果。
-
