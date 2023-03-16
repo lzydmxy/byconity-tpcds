@@ -31,9 +31,9 @@ Resource requirements of each components.
     ```
 7. Initial and start the ByConity components:  
     1). Start TSO on 1 host: `./run.sh tso`.   
-    2). Start servers, each server on 1 host: `./run.sh server`.  
-    3). Start the deamon manager on 1 host: `./run.sh dm`.  
-    4). Start the resource manager on 1 host: `./run.sh rm`.      
+    2). Start the resource manager on 1 host: `./run.sh rm`.   
+    3). Start the deamon manager on 1 host: `./run.sh dm`.     
+    4). Start servers, each server on 1 host: `./run.sh server`.  
     5). Start write workers, each write worker on 1 host: `./run.sh write_worker <woker_id>`. `worker_id` is optional, if not specified, `<hostname>-write` will be used.
     6). Start read workers, each read worker on 1 host: `./run.sh read_worker <woker_id>`. `worker_id` is optional, if not specified, `<hostname>-read` will be used.
 8. You can restart the ByConity components by: `./run.sh stop {component_name}`, and `./run.sh stop {component_name}`, the `component_name` is the same as described in #6.
@@ -51,7 +51,7 @@ Resource requirements of each components.
     sudo dpkg -i byconity-common-static_0.1.1.1_amd64.deb
     ```
     3). Setup server addresses in the `/etc/byconity-server/cnch_config.xml`, the same way as described in #1.1. You can refer to the sections in `docker/config/cncn_config.xml` file in this project.  
-    4). Replace the `/etc/byconity-server/fdb.config` with the `fdb.cluster` file generated in the FDB setup step above.
+    4). Replace the content of `/etc/byconity-server/fdb.config` with the content of `fdb.cluster` file generated in the FDB setup step above.
 3. Initial and start the ByConity components:
     1). Choose 1 host to run TSO, download the `byconity-tso` package and install.
     ```
@@ -61,20 +61,20 @@ Resource requirements of each components.
     ```
     systemctl start byconity-tso
     ```
-    2). Choose 1 host to run server, download the `byconity-server` package and install.
+    2). Choose 1 host to run resource manager, download the `byconity-resource-manager` package and install.
     ```
-    sudo dpkg -i byconity-server_0.1.1.1_amd64.deb 
-    systemctl start byconity-server
+    sudo dpkg -i byconity-resource-manager_0.1.1.1_amd64.deb 
+    systemctl start byconity-resource-manager
     ```
     3). Choose 1 host to run deamon manager, download the `byconity-daemon-manager` package and install.
     ```
     sudo dpkg -i byconity-daemon-manager_0.1.1.1_amd64.deb 
     systemctl start byconity-daemon-manager
     ```
-    4). Choose 1 host to run resource manager, download the `byconity-resource-manager` package and install.
+    4). Choose 1 host to run server, download the `byconity-server` package and install.
     ```
-    sudo dpkg -i byconity-resource-manager_0.1.1.1_amd64.deb 
-    systemctl start byconity-resource-manager
+    sudo dpkg -i byconity-server_0.1.1.1_amd64.deb 
+    systemctl start byconity-server
     ```
     5). Choose 3+ hosts to run read worker, download the `byconity-worker` package and install. Before starting the service, export the environment variables for resource manager discovery. `WORKER_ID` has to be unique.
     ```
