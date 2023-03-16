@@ -25,9 +25,9 @@
 3.  配置`config/cnch_config.xml`。设置服务器 ip 地址，将 `{xxx_address}` 替换为实际服务器地址。这包括服务器、tso、deamon manager 和 resource manager。如有需要你可以调整可能导致冲突的端口。然后在`<hdfs_nnproxy>`中设置HDFS namenode的地址
 4.  将 `config/fdb.cluster` 替换为上面 FDB 设置步骤中生成的 `fdb.cluster` 文件
 5.  根据上面的资源需求列表和你的实际资源情况调整run.sh中的参数，尤其是要分配给每个组件的 cpu和内存数。如果你在`config/cnch_config.xml`中改了端口，这里在run.sh也要做相应的修改。
-6.  在您需要部署 ByConity 组件的每台主机上，执行以下操作：
-      1）将 docker 文件夹复制到主机。
-      2）拉取docker镜像：
+6.  在您需要部署 ByConity 组件的每台主机上，执行以下操作： 
+      1）将 docker 文件夹复制到主机。 
+      2）拉取docker镜像： 
     ```
     docker pull byconity/byconity-server:stable
     ```
