@@ -95,7 +95,7 @@
 ### 共享物理机
 如果你的机器资源有限，可以共享物理主机进行本次实践。
 1. 可以在同一台主机上安装HDFS name node、TSO、deamon manager和1个ByConity Server。
-2. 1个read worker可以和1个write worker共享主机，同时他们也可以进一步和1个HDFS数据节点，1个FDB节点共享主机。
+2. 1个read/write worker可以和1个HDFS数据节点，1个FDB节点共享主机。如果你采用的是docker部署方式，1个read worker也可以和1个write worker共享主机，但如果是软件包部署模式则不可以共享。
 
 
 ## 2. **设置客户端**
@@ -130,7 +130,7 @@
 
 ## 4. 运行TPC-DS基准测试
 
-按照以下指南在 ByConity 上运行 TPC-DS 基准测试并收集结果。
+在 ByConity 上运行 TPC-DS 基准测试并收集结果。
 
 #### 4.1 所需安装包
 
