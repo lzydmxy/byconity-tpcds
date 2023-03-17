@@ -15,10 +15,19 @@
 # 
 
 set -e
+source ./config.sh
 source ./helper.sh
 
 SIZE=$1
-PARALLEL=$2
+
+if [ -z "$PARALLEL" ]; then
+    PARALLEL=$(($(grep -c ^processor /proc/cpuinfo)/2))
+    if (( PARALLEL < 2 )); then
+        PARALLEL=2
+    fi
+fi
+
+log "set PARALLEL ${PARALLEL}"
 
 usage() {
 	echo "usage: $0 <size(gb)> <flag>"
