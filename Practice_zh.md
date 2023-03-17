@@ -37,7 +37,7 @@
    4）启动server，每个server运行在 1 台主机上：`./run.sh server`.    
    5）启动write workers，每个write worker运行在1台主机上：`./run.sh write_worke <worker_id>`. `worker_id` 是可选的，如果不设，会取`<hostname>-write`.   
    6）启动read workers，每个read worker运行在1台主机上：`./run.sh read_worke <worker_id>`. `worker_id` 是可选的，如果不设，会取`<hostname>-read`.   
-8. 后面如果要重启 ByConity 组件，可以用以下命令：`./run.sh stop {component_name}`, 以及 `./run.sh` `start` `{component_name}`, `component_name` 与#6中的描述相同
+8. 后面如果要重启 ByConity 组件，可以用以下命令：`./run.sh stop {component_name}`, 以及 `./run.sh` `start` `{component_name}`, `component_name` 与#7中的描述相同
 
 
 ### 1.3.2 **方式二：****软件包****部署**
