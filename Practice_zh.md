@@ -81,12 +81,12 @@
     sudo dpkg -i byconity-server_0.1.1.1_amd64.deb 
     systemctl start byconity-server
     ```
-    5）选择3台以上主机运行read worker，下载`byconity-worker` 包并安装。由于启用了resource manager作worker的发现，这里需要设置相关的环境变量，注意`WORKER_ID`必须是唯一的。
+    5）选择3台以上主机运行read worker，下载`byconity-worker` 包并安装。
     ```
     sudo dpkg -i byconity-worker_0.1.1.1_amd64.deb 
     systemctl start byconity-worker
     ```
-    6）选择3台以上主机运行write worker，下载 `byconity-write-worker` 包并安装。由于启用了resource manager作worker的发现，这里需要设置相关的环境变量，注意`WORKER_ID`必须是唯一的。
+    6）选择3台以上主机运行write worker，下载 `byconity-write-worker` 包并安装。
     ```
     sudo dpkg -i byconity-worker-write_0.1.1.1_amd64.deb 
     systemctl start byconity-worker-write
