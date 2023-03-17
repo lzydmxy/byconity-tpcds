@@ -1,42 +1,42 @@
 # ByConity集群搭建与TPC-DS Benchmark实践
 
 ## 1. 准备
-1.1. 根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/FDB_installation_zh.md)将Foundation DB安装到3台物理机上。 
-1.2. 根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/HDFS_installation_zh.md)将 HDFS 设置为 4 台以上物理机，具有 1 个name node和 3 个以上data node。
-1.3. 您可以使用2种方式来部署ByConity集群： Docker 或软件包。
+1.1. 根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/FDB_installation_zh.md)将Foundation DB安装部署到3台物理机上。   
+1.2. 根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/HDFS_installation_zh.md)将 HDFS安装部署到4台以上物理机，具有 1 个name node和 3 个以上data node。  
+1.3. 您可以使用2种方式来部署ByConity集群： Docker 或软件包。  
 
 每个组件的资源需求。
 
 | 组件 | CPU | 内存 | 硬盘  | 实例 | 
 | :-----| :----- | :----- | :----- | :----- | 
 | TSO | 2 | 500M | 5G | 1 |
-| Server | 16 | 60G | 100G | >=1 |
-| Write Worker | 16 | 60G | 100G | >=3 |
-| Read Worker | 16 | 60G | 100G | >=3 |
-| DaemonManager | 4 | 10G | 10G | 1 |
-| ResourceManager | 8 | 16G | 10G | 1 |
-| Client | 8+ | 16G+ | 200G | 1 |
+| Server | 16 | 30G | 100G | >=1 |
+| Write Worker | 16 | 30G | 100G | >=3 |
+| Read Worker | 16 | 30G | 100G | >=3 |
+| DaemonManager | 4 | 5G | 10G | 1 |
+| ResourceManager | 4 | 5G | 10G | 1 |
+| Client | 8+ | 16G+ | 150G | 1 |
 
 ### 1.3.1 方式一：Docker部署
 
-1. 确保系统中安装了docker。可以参考[官方文档](https://docs.docker.com/engine/install/)安装
-2. 转到 项目中的docker 文件夹。
-3. 配置`config/cnch_config.xml`。设置服务器 ip 地址，将 `{xxx_address}` 替换为实际服务器地址。这包括服务器、tso、deamon manager 和 resource manager。如有需要你可以调整可能导致冲突的端口。然后在`<hdfs_nnproxy>`中设置HDFS namenode的地址
-4. 将 `config/fdb.cluster` 替换为上面 FDB 设置步骤中生成的 `fdb.cluster` 文件
-5. 根据上面的资源需求列表和你的实际资源情况调整run.sh中的参数，尤其是要分配给每个组件的 cpu和内存数。如果你在`config/cnch_config.xml`中改了端口，这里在run.sh也要做相应的修改。
-6. 在您需要部署 ByConity 组件的每台主机上，执行以下操作：  
-      1）将 docker 文件夹复制到主机。  
-      2）拉取docker镜像：  
+1. 确保系统中安装了docker。可以参考[官方文档](https://docs.docker.com/engine/install/)安装. 
+2. 转到 项目中的docker 文件夹。  
+3. 配置`config/cnch_config.xml`。设置服务器 ip 地址，将 `{xxx_address}` 替换为实际服务器地址。这包括服务器、tso、deamon manager 和 resource manager。如有需要你可以调整可能导致冲突的端口。然后在`<hdfs_nnproxy>`中设置HDFS namenode的地址。  
+4. 将 `config/fdb.cluster` 替换为上面 FDB 设置步骤中生成的 `fdb.cluster` 文件。  
+5. 根据上面的资源需求列表和你的实际资源情况调整run.sh中的参数，尤其是要分配给每个组件的 cpu和内存数。如果你在`config/cnch_config.xml`中改了端口，这里在run.sh也要做相应的修改。  
+6. 在您需要部署 ByConity 组件的每台主机上，执行以下操作：   
+    1）将 docker 文件夹复制到主机。  
+    2）拉取docker镜像：  
     ```
     docker pull byconity/byconity-server:stable
     ```
-7. 初始化并启动ByConity组件： 
-      1）在 1 台主机上启动 TSO: `./run.sh tso`.  
-      2）在1台主机上启动 resource manager：`./run.sh rm`.   
-      3）在1台主机上启动 deamon manager：`./run.sh dm`.   
-      4）启动server，每个server运行在 1 台主机上：`./run.sh server`.    
-      5）启动write workers，每个write worker运行在1台主机上：`./run.sh write_worke <worker_id>`. `worker_id` 是可选的，如果不设，会取`<hostname>-write`.   
-      6）启动read workers，每个read worker运行在1台主机上：`./run.sh read_worke <worker_id>`. `worker_id` 是可选的，如果不设，会取`<hostname>-read`.   
+7. 初始化并启动ByConity组件：  
+   1）在 1 台主机上启动 TSO: `./run.sh tso`.   
+   2）在1台主机上启动 resource manager：`./run.sh rm`.   
+   3）在1台主机上启动 deamon manager：`./run.sh dm`.   
+   4）启动server，每个server运行在 1 台主机上：`./run.sh server`.    
+   5）启动write workers，每个write worker运行在1台主机上：`./run.sh write_worke <worker_id>`. `worker_id` 是可选的，如果不设，会取`<hostname>-write`.   
+   6）启动read workers，每个read worker运行在1台主机上：`./run.sh read_worke <worker_id>`. `worker_id` 是可选的，如果不设，会取`<hostname>-read`.   
 8. 后面如果要重启 ByConity 组件，可以用以下命令：`./run.sh stop {component_name}`, 以及 `./run.sh` `start` `{component_name}`, `component_name` 与#6中的描述相同
 
 
@@ -95,7 +95,7 @@
 ### 共享物理机
 如果你的机器资源有限，可以共享物理主机进行本次实践。
 1. 可以在同一台主机上安装HDFS name node、TSO、deamon manager和1个ByConity Server。
-2. 1个read worker可以和1个write worker共享主机，同时他们也可以进一步和1个HDFS数据节点，1个FDB节点共享主机。
+2. 1个read/write worker可以和1个HDFS数据节点，1个FDB节点共享主机。如果你采用的是docker部署方式，1个read worker也可以和1个write worker共享主机，但如果是软件包部署模式则不可以共享。
 
 
 ## 2. **设置客户端**
@@ -130,7 +130,7 @@
 
 ## 4. 运行TPC-DS基准测试
 
-按照以下指南在 ByConity 上运行 TPC-DS 基准测试并收集结果。
+在 ByConity 上运行 TPC-DS 基准测试并收集结果。
 
 #### 4.1 所需安装包
 
@@ -175,7 +175,7 @@ chmod a+x *.sh
 ./benchmark.sh 100
 ```
 
-#### 4.8 检查结果
+#### 4.8 检查和收集结果
 在logs文件夹中，查看TPC-DS的运行结果，其中：  
 1）result.csv，运行结果，格式为['Query ID', 'Time in ms', 'Status' (0 为正常)]   
 2）trace.log，详细的基准测试中运行的查询。  
