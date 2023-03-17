@@ -1,8 +1,8 @@
 # ByConity集群搭建与TPC-DS Benchmark实践
 
 ## 1. 准备
-1.1. 根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/FDB_installation_zh.md)将Foundation DB安装到3台物理机上。   
-1.2. 根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/HDFS_installation_zh.md)将 HDFS 设置为 4 台以上物理机，具有 1 个name node和 3 个以上data node。  
+1.1. 根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/FDB_installation_zh.md)将Foundation DB安装部署到3台物理机上。   
+1.2. 根据此[指南](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/HDFS_installation_zh.md)将 HDFS安装部署到4台以上物理机，具有 1 个name node和 3 个以上data node。  
 1.3. 您可以使用2种方式来部署ByConity集群： Docker 或软件包。  
 
 每个组件的资源需求。
