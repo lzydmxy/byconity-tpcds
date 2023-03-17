@@ -29,7 +29,7 @@ function run_tso() {
 function run_server() {
     docker run -d --restart=on-failure \
     --cpus 16 \
-    --memory 60g \
+    --memory 30g \
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
@@ -49,7 +49,7 @@ function run_read_worker() {
 	fi
     docker run -d --restart=on-failure \
     --cpus 16 \
-    --memory 60g \
+    --memory 30g \
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
@@ -72,7 +72,7 @@ function run_write_worker() {
 	fi
     docker run -d --restart=on-failure \
     --cpus 16 \
-    --memory 60g \
+    --memory 30g \
     --mount type=bind,source="$(pwd)"/config,target=/root/app/config \
     --mount type=bind,source="$(pwd)"/logs,target=/root/app/logs \
     --mount type=bind,source="$(pwd)"/data,target=/root/app/data \
