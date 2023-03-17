@@ -10,12 +10,12 @@ Resource requirements of each components.
 | Component        | CPU | Memory | Disk | Instances |
 | :-------------- | :-- | :--- | :--- | :----- |
 | TSO             | 2   | 500M | 5G   | 1      |
-| Server          | 16  | 60G  | 100G   | >=1   |
-| Write Worker    | 16  | 60G  | 100G  | >=3    |
-| Read Worker     | 16  | 60G | 100G  | >=3    |
-| DaemonManager   | 4   | 10G  | 10G  | 1      |
-| ResourceManager | 8   | 16G  | 10G  | 1      |
-| Client         | 8+   | 16G+  | 200G  | 1     |
+| Server          | 16  | 30G  | 100G   | >=1   |
+| Write Worker    | 16  | 30G  | 100G  | >=3    |
+| Read Worker     | 16  | 30G | 100G  | >=3    |
+| DaemonManager   | 4   | 5G  | 10G  | 1      |
+| ResourceManager | 4   | 5G  | 10G  | 1      |
+| Client         | 8+   | 16G+  | 150G  | 1     |
 
 ### 1.3.1 Option 1: Docker deployment
 1. Make sure docker is installed in your system. You can follow the [official guide](https://docs.docker.com/engine/install/) to install.
@@ -36,7 +36,7 @@ Resource requirements of each components.
     4). Start servers, each server on 1 host: `./run.sh server`.  
     5). Start write workers, each write worker on 1 host: `./run.sh write_worker <woker_id>`. `worker_id` is optional, if not specified, `<hostname>-write` will be used.
     6). Start read workers, each read worker on 1 host: `./run.sh read_worker <woker_id>`. `worker_id` is optional, if not specified, `<hostname>-read` will be used.
-8. You can restart the ByConity components by: `./run.sh stop {component_name}`, and `./run.sh stop {component_name}`, the `component_name` is the same as described in #6.
+8. You can restart the ByConity components by: `./run.sh stop {component_name}`, and `./run.sh stop {component_name}`, the `component_name` is the same as described in #7.
 
 ### 1.3.2 Option 2: Package deployment
 1. Find the ByConity releases on [this page](https://github.com/ByConity/ByConity/releases)
@@ -76,12 +76,12 @@ Resource requirements of each components.
     sudo dpkg -i byconity-server_0.1.1.1_amd64.deb 
     systemctl start byconity-server
     ```
-    5). Choose 3+ hosts to run read worker, download the `byconity-worker` package and install. Before starting the service, export the environment variables for resource manager discovery. `WORKER_ID` has to be unique.
+    5). Choose 3+ hosts to run read worker, download the `byconity-worker` package and install.
     ```
     sudo dpkg -i byconity-worker_0.1.1.1_amd64.deb 
     systemctl start byconity-worker
     ```
-    6). Choose 3+ hosts to run write worker, download the `byconity-write-worker` package and install. Before starting the service, export the environment variables for resource manager discovery. `WORKER_ID` has to be unique.
+    6). Choose 3+ hosts to run write worker, download the `byconity-write-worker` package and install.
     ```
     sudo dpkg -i byconity-worker-write_0.1.1.1_amd64.deb 
     systemctl start byconity-worker-write
@@ -108,7 +108,11 @@ If you have limited resources, you can share physical machines for this practice
     ```
     bin/clickhouse client --host=<your_server_host> --port=<your_server_tcp_port>  --enable_optimizer=1 --dialect_type='ANSI'
     ```
-2. Run some basic queries
+2. Make sure all workers are running and discovered
+    ```
+    select * from system.workers
+    ```
+3. Run some basic queries
     ```
     CREATE DATABASE test;
     USE test;
@@ -116,7 +120,7 @@ If you have limited resources, you can share physical machines for this practice
     INSERT INTO events SELECT number, toString(number) FROM numbers(10);
     SELECT * FROM events ORDER BY id;
     ```
-3. Make sure you get the results with no exceptions.
+4. Make sure you get the results with no exceptions.
 
 ## 4. Run TPC-DS benchmark
 Follow [this guide](https://github.com/ByConity/byconity-tpcds/blob/main/README.md) to run the TPC-DS benchmark on ByConity. Collect the results. 
