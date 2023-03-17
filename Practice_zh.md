@@ -117,7 +117,11 @@
     ```
     bin/clickhouse client --host=<your_server_host> --port=<your_server_tcp_port>  --enable_optimizer=1 --dialect_type='ANSI'
     ```
-2. 运行一些基本的SQL
+2. 确保所有worker正常启动并且被识别
+    ```
+    select * from system.workers
+    ```
+3. 运行一些基本的SQL
     ```
     CREATE DATABASE test;
     USE test;
@@ -125,7 +129,7 @@
     INSERT INTO events SELECT number, toString(number) FROM numbers(10);
     SELECT * FROM events ORDER BY id;
     ```
-3. 确保运行结果是正常的
+4. 确保运行结果是正常的
 
 
 ## 4. 运行TPC-DS基准测试
