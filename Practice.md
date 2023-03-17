@@ -17,7 +17,7 @@ Resource requirements of each components.
 | ResourceManager | 8   | 16G  | 10G  | 1      |
 | Client         | 8+   | 16G+  | 200G  | 1     |
 
-### 1.1 Option 1: Docker deployment
+### 1.3.1 Option 1: Docker deployment
 1. Make sure docker is installed in your system. You can follow the [official guide](https://docs.docker.com/engine/install/) to install.
 2. Go to the docker folder in this project. 
 3. Configure the `config/cnch_config.xml`. Setup host addresses in `<service_discovery>`, replace the `{xxx_address}` with your actual host address. This includes xml sections of server, tso, deamon manager and resource manager. You can optional adjust the ports that could cause conflicts on your environment. Setup hdfs namenode address in `<hdfs_nnproxy>`.
@@ -31,14 +31,14 @@ Resource requirements of each components.
     ```
 7. Initial and start the ByConity components:  
     1). Start TSO on 1 host: `./run.sh tso`.   
-    2). Start servers, each server on 1 host: `./run.sh server`.  
-    3). Start the deamon manager on 1 host: `./run.sh dm`.  
-    4). Start the resource manager on 1 host: `./run.sh rm`.      
+    2). Start the resource manager on 1 host: `./run.sh rm`.   
+    3). Start the deamon manager on 1 host: `./run.sh dm`.     
+    4). Start servers, each server on 1 host: `./run.sh server`.  
     5). Start write workers, each write worker on 1 host: `./run.sh write_worker <woker_id>`. `worker_id` is optional, if not specified, `<hostname>-write` will be used.
     6). Start read workers, each read worker on 1 host: `./run.sh read_worker <woker_id>`. `worker_id` is optional, if not specified, `<hostname>-read` will be used.
 8. You can restart the ByConity components by: `./run.sh stop {component_name}`, and `./run.sh stop {component_name}`, the `component_name` is the same as described in #6.
 
-### 1.2 Option 2: Package deployment
+### 1.3.2 Option 2: Package deployment
 1. Find the ByConity releases on [this page](https://github.com/ByConity/ByConity/releases)
 2. On every host that you need you deploy ByConity components, do the following:  
     1). Install FoundationDB client package, you can find the releases on [this page](https://github.com/apple/foundationdb/releases). Make sure you install the same version as the FoundationDB server which described above.
@@ -51,7 +51,7 @@ Resource requirements of each components.
     sudo dpkg -i byconity-common-static_0.1.1.1_amd64.deb
     ```
     3). Setup server addresses in the `/etc/byconity-server/cnch_config.xml`, the same way as described in #1.1. You can refer to the sections in `docker/config/cncn_config.xml` file in this project.  
-    4). Replace the `/etc/byconity-server/fdb.config` with the `fdb.cluster` file generated in the FDB setup step above.
+    4). Replace the content of `/etc/byconity-server/fdb.config` with the content of `fdb.cluster` file generated in the FDB setup step above.
 3. Initial and start the ByConity components:
     1). Choose 1 host to run TSO, download the `byconity-tso` package and install.
     ```
@@ -61,42 +61,36 @@ Resource requirements of each components.
     ```
     systemctl start byconity-tso
     ```
-    2). Choose 1 host to run server, download the `byconity-server` package and install.
+    2). Choose 1 host to run resource manager, download the `byconity-resource-manager` package and install.
     ```
-    sudo dpkg -i byconity-server_0.1.1.1_amd64.deb 
-    systemctl start byconity-server
+    sudo dpkg -i byconity-resource-manager_0.1.1.1_amd64.deb 
+    systemctl start byconity-resource-manager
     ```
     3). Choose 1 host to run deamon manager, download the `byconity-daemon-manager` package and install.
     ```
     sudo dpkg -i byconity-daemon-manager_0.1.1.1_amd64.deb 
     systemctl start byconity-daemon-manager
     ```
-    4). Choose 1 host to run resource manager, download the `byconity-resource-manager` package and install.
+    4). Choose 1 host to run server, download the `byconity-server` package and install.
     ```
-    sudo dpkg -i byconity-resource-manager_0.1.1.1_amd64.deb 
-    systemctl start byconity-resource-manager
+    sudo dpkg -i byconity-server_0.1.1.1_amd64.deb 
+    systemctl start byconity-server
     ```
     5). Choose 3+ hosts to run read worker, download the `byconity-worker` package and install. Before starting the service, export the environment variables for resource manager discovery. `WORKER_ID` has to be unique.
     ```
     sudo dpkg -i byconity-worker_0.1.1.1_amd64.deb 
-    export VIRTUAL_WAREHOUSE_ID=vw_default
-    export WORKER_GROUP_ID=wg_default
-    export WORKER_ID=read-worker-1
     systemctl start byconity-worker
     ```
     6). Choose 3+ hosts to run write worker, download the `byconity-write-worker` package and install. Before starting the service, export the environment variables for resource manager discovery. `WORKER_ID` has to be unique.
     ```
     sudo dpkg -i byconity-worker-write_0.1.1.1_amd64.deb 
-    export VIRTUAL_WAREHOUSE_ID=vw_write
-    export WORKER_GROUP_ID=wg_write
-    export WORKER_ID=write-worker-1
     systemctl start byconity-worker-write
     ```
 
 ### Sharing of physical machines
 If you have limited resources, you can share physical machines for this practice. 
 1. You can install HDFS name node, TSO, deamon manager, and 1 ByConity Server to the same host. 
-2. 1 read worker can share the host with 1 write worker. Furthermore, they can share the host with 1 HDFS data node, and 1 FDB node. 
+2. 1 read / write worker can share the host with 1 HDFS data node, and 1 FDB node. For docker mode, 1 read worker can also share with 1 write worker, but for pkg installation mode, it can't.
 
 ## 2. Setup client
 1. Find a machine that you want to setup as the client to run TPC-DS. Git clone byconity-tpcds project.
