@@ -164,7 +164,7 @@ chmod a+x *.sh
 ```
 
 #### 4.6 将数据写入到 ByConity
-运行命令以将 TPD-DS 数据从数据文件写入到 ByConity。 $1 是数据大小(GB)。
+运行命令以将 TPD-DS 数据从数据文件写入到 ByConity。 $1 是数据大小(GB)。数据的写入会依据PARALLEL并行。
 ```
 ./populate_data.sh 100
 ```
