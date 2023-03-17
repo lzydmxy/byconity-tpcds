@@ -29,9 +29,9 @@ Run the command to build TPD-DS tools, the tool will be generated to `build` fol
 ```
 
 ### Generate data
-Run the command to generated TPD-DS data files. In the command, $1 is the data size, $2 is parallel. The data file will be generated into `data_tpcds_{data_size}` folder. The data generation takes time. There is no output about progress during the data generation. If you want to see the progress, please watch the files generated in the folder.
+Run the command to generated TPD-DS data files. In the command, $1 is the data size. The data generation is run in parallel, using the PARALLEL setting in the config.sh. The data file will be generated into `data_tpcds_{data_size}` folder. The data generation takes time. There is no output about progress during the data generation. If you want to see the progress, please watch the files generated in the folder.
 ```
-./gen_data.sh 100 16
+./gen_data.sh 100
 ```
 
 ### Populate data to ByConity
