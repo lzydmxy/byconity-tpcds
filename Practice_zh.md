@@ -10,12 +10,12 @@
 | 组件 | CPU | 内存 | 硬盘  | 实例 | 
 | :-----| :----- | :----- | :----- | :----- | 
 | TSO | 2 | 500M | 5G | 1 |
-| Server | 16 | 60G | 100G | >=1 |
-| Write Worker | 16 | 60G | 100G | >=3 |
-| Read Worker | 16 | 60G | 100G | >=3 |
-| DaemonManager | 4 | 10G | 10G | 1 |
-| ResourceManager | 8 | 16G | 10G | 1 |
-| Client | 8+ | 16G+ | 200G | 1 |
+| Server | 16 | 30G | 100G | >=1 |
+| Write Worker | 16 | 30G | 100G | >=3 |
+| Read Worker | 16 | 30G | 100G | >=3 |
+| DaemonManager | 4 | 5G | 10G | 1 |
+| ResourceManager | 4 | 5G | 10G | 1 |
+| Client | 8+ | 16G+ | 150G | 1 |
 
 ### 1.3.1 方式一：Docker部署
 
