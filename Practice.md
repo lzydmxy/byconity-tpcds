@@ -1,4 +1,4 @@
-# Practice of ByConity Cluster Setup and TPC-DS Benckmark
+# Practice of ByConity Cluster Setup and TPC-DS Benchmark
 
 ## 1. Preperation
 1. Install Foundation DB to 3 physical machines. You can follow [this guide](https://github.com/ByConity/ByConity/blob/master/docker/executable_wrapper/FDB_installation.md)
