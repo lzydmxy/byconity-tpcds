@@ -55,7 +55,7 @@
     sudo dpkg -i byconity-common-static_0.1.1.1_amd64.deb
     ```
     3）在 `/etc/byconity-server/cnch_config.xml`中设置服务器地址，方法与#1.3.1 中描述的相同。 可以参考本项目中 `docker/config/cncn_config.xml` 对应的部分 。  
-    4）将 `/etc/byconity-server/fdb.config` 中的内容替换为为在#1.1中的 FDB 设置步骤中生成的`fdb.cluster` 文件内容。  
+    4）将 `/etc/byconity-server/fdb.cluster` 中的内容替换为为在#1.1中的 FDB 设置步骤中生成的`fdb.cluster` 文件内容。  
 
 3. 初始化并启动 ByConity 组件：  
     1）选择1台主机运行TSO，下载byconity-tso包并安装。
